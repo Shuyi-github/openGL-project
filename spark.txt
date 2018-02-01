@@ -1,0 +1,82 @@
+1.
+def distance(p:Vector[Double], q:Vector[Double]) : Double = {
+	math.sqrt(p.zip(q).map(pair => math.pow((pair._1 - pair._2), 2) ).reduce(_+_));
+}
+def clostestpoint(q:Vector[Double], candidates:Array[Vector[Double]]):Vector[Double]={
+	 candidates.reduceLeft((a, b) => if (distance(q,a) < distance(q,b)) a else b)
+}
+def add_vec(v1:Vector[Double],v2:Vector[Double]):Vector[Double]={
+	v1.zip(v2).map(pair => (pair._1 + pair._2));
+}
+
+def averge(cluster: Iterable[Vector[Double]]):Vector[Double]={
+	 cluster.reduceLeft(add_vec(_,_)).map(_ / (cluster.size)); 
+}
+
+2.
+import java.util.Random
+import scala.io.Source
+
+def distance(p:Vector[Double], q:Vector[Double]) : Double = {
+	math.sqrt(p.zip(q).map(pair => math.pow((pair._1 - pair._2), 2) ).reduce(_+_));
+}
+def clostestpoint(q:Vector[Double], candidates:Array[Vector[Double]]):Vector[Double]={
+	 candidates.reduceLeft((a, b) => if (distance(q,a) < distance(q,b)) a else b)
+}
+def add_vec(v1:Vector[Double],v2:Vector[Double]):Vector[Double]={
+	v1.zip(v2).map(pair => (pair._1 + pair._2));
+}
+
+def averge(cluster: Iterable[Vector[Double]]):Vector[Double]={
+	 cluster.reduceLeft(add_vec(_,_)).map(_ / (cluster.size)); 
+}
+
+object kmeans {
+val k = 3
+  def main(args: Array[String]): Unit = {
+	val rand = new Random(System.currentTimeMillis())
+	
+	var pointlist = scala.collection.mutable.ListBuffer.empty[Vector[Double]]
+	var center:Array[Vector[Double]] = new Array[Vector[Double]](k)
+    	val filename = "clustering_dataset.txt?dl=0"
+	for (line <- Source.fromFile(filename).getLines) {
+	var x =  line.split("\t")(0).toDouble
+	var y = line.split("\t")(1).toDouble
+	var vector = Vector(x,y)
+	pointlist += vector
+    	
+}
+	
+	val pointsNum = pointlist.size
+	for( i<- 0 to k-1){
+	center(i) = pointlist(rand.nextInt(pointlist.size)-1)
+	}
+	var bool= true
+	while(bool){
+	val cluster = pointlist.groupBy { clostestpoint(center,_) }   
+	val newCenters = center.map { oldCenter =>   
+         cluster.get(oldCenter) match{  
+           case Some(pointsInCluster) =>   
+             averge(pointsInCluster)
+           case None => oldCenter  
+         				}  
+        	}  
+	var movement = 0d  
+	       for(i <- 0 to k-1){  
+		 movement += distance(center(i),newCenters(i))  
+		 center(i) = newCenters(i)   
+	       }  
+	       if(movement <= 0.000001){  
+		 bool = false  
+	       }  
+	}
+	println(center(i))
+	val pointLable = new Array[Int](pointsNum)  
+	for(i<- 0 to pointsNum-1)
+	{
+	temp = clostestpoint(pointlist(i),center)
+	pointLable(i) = center.indexOf(temp) 
+	println(pointLable(i))
+	}
+  }
+}
