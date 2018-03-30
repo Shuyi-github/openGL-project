@@ -1,0 +1,6 @@
+﻿  main.cpp
+h:\windows\documents\visual studio 2015\projects\win32project1\win32project1\main.cpp(94): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+h:\windows\documents\visual studio 2015\projects\win32project1\win32project1\main.cpp(190): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+h:\windows\documents\visual studio 2015\projects\win32project1\win32project1\main.cpp(385): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+  Win32Project1.vcxproj -> H:\Windows\Documents\Visual Studio 2015\Projects\Win32Project1\Debug\Win32Project1.exe
+  Win32Project1.vcxproj -> H:\Windows\Documents\Visual Studio 2015\Projects\Win32Project1\Debug\Win32Project1.pdb (Full PDB)
