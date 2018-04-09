@@ -149,66 +149,84 @@ void CompileLists()
 /*yjx 20180409 16:03*/
 			//后面
 			//glColor3f(1.0f, 0.0f, 0.0f);
+			glTexCoord2f(0, 0);
 			glVertex3d(1500, 100, 0);//右上
 			//glColor3f(1.0f, 0.0f, 0.0f);
+			glTexCoord2f(1, 0);
 			glVertex3d(2000, 100, 0);//左上
 			//glColor3f(1.0f, 0.0f, 0.0f);
+			glTexCoord2f(1, 1);
 			glVertex3d(2000, 475, 0);//左下
 			//glColor3f(1.0f, 0.0f, 0.0f);
+			glTexCoord2f(0, 1);
 			glVertex3d(1500, 475, 0);//右下
 			 //前面
-			glColor3f(0.0f, 1.0f, 0.0f);
+			//glColor3f(0.0f, 1.0f, 0.0f);
+			glTexCoord2f(0, 0);
 			glVertex3d(2000, 100, -0.8);//右上
-			glColor3f(0.0f, 1.0f, 0.0f);
+			//glColor3f(0.0f, 1.0f, 0.0f);
+			glTexCoord2f(1, 0);
 			glVertex3d(1500, 100, -0.8);//左上
-			glColor3f(0.0f, 1.0f, 0.0f);
+			//glColor3f(0.0f, 1.0f, 0.0f);
+			glTexCoord2f(1, 1);
 			glVertex3d(1500, 475, -0.8);//左下
-			glColor3f(0.0f, 1.0f, 0.0f);
+			//glColor3f(0.0f, 1.0f, 0.0f);
+			glTexCoord2f(0, 1);
 			glVertex3d(2000, 475, -0.8);//右下
 			//左面
-			glColor3f(0.0f, 0.0f, 1.0f);		
+			//glColor3f(0.0f, 0.0f, 1.0f);	
+			glTexCoord2f(0, 0);
 			glVertex3d(1500, 100, -0.8);//右上
-			glColor3f(0.0f, 0.0f, 1.0f);
+			//glColor3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1, 0);
 			glVertex3d(1500, 100, 0);//左上
-			glColor3f(0.0f, 0.0f, 1.0f);
+			//glColor3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1, 1);
 			glVertex3d(1500, 475, 0);//左下
-			glColor3f(0.0f, 0.0f, 1.0f);
+			//glColor3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(0, 1);
 			glVertex3d(1500, 475, -0.8);//右下
 
 			//右面
-			glColor3f(1.0f, 0.0f, 1.0f);
+			//glColor3f(1.0f, 0.0f, 1.0f);
+			glTexCoord2f(0, 0);
 			glVertex3d(2000, 100, 0);//右上
-			glColor3f(1.0f, 0.0f, 1.0f);
+			//glColor3f(1.0f, 0.0f, 1.0f);
+			glTexCoord2f(1, 0);
 			glVertex3d(2000, 100, -0.8);//左上
-			glColor3f(1.0f, 0.0f, 1.0f);
+			//glColor3f(1.0f, 0.0f, 1.0f);
+			glTexCoord2f(1, 1);
 			glVertex3d(2000, 475, -0.8);//左下
-			glColor3f(1.0f, 0.0f, 1.0f);
+			//glColor3f(1.0f, 0.0f, 1.0f);
+			glTexCoord2f(0, 1);
 			glVertex3d(2000, 475, 0);//右下
 			//下面
-			glColor3ub(128, 128, 128);
+			//glColor3ub(128, 128, 128);
+			glTexCoord2f(0, 0);
 			glVertex3d(2000, 475, -0.8);//右上
-			glColor3ub(128, 128, 128);
+			//glColor3ub(128, 128, 128);
+			glTexCoord2f(1, 0);
 			glVertex3d(1500, 475, -0.8);//左上
-			glColor3ub(128, 128, 128);
+			//glColor3ub(128, 128, 128);
+			glTexCoord2f(1, 1);
 			glVertex3d(1500, 475, 0);//左下
-			glColor3ub(128, 128, 128);
+			//glColor3ub(128, 128, 128);
+			glTexCoord2f(0, 1);
 			glVertex3d(2000, 475, 0);//右下
 			
 			//上面		
-			glColor3ub(151, 200, 151);
+			//glColor3ub(151, 200, 151);
+			glTexCoord2f(0, 0);
 			glVertex3d(2000, 100, -0.8);//右上
-			glColor3ub(151, 200, 151);
+			//glColor3ub(151, 200, 151);
+			glTexCoord2f(1, 0);
 			glVertex3d(1500, 100, -0.8);//左上
-			glColor3ub(151, 200, 151);
+			//glColor3ub(151, 200, 151);
+			glTexCoord2f(1, 1);
 			glVertex3d(1500, 100, 0);//左下
-			glColor3ub(151, 200, 151);
+			//glColor3ub(151, 200, 151);
+			glTexCoord2f(0, 1);
 			glVertex3d(2000, 100, 0);//右下
-			
-			glColor3f(255, 255, 255);
-			glVertex3d(1800, 150, -0.5);//右上
-			glVertex3d(1700, 150, -0.5);//左上
-			glVertex3d(1700, 150, -0.2);//左下
-			glVertex3d(1800, 150, -0.2);//右下
 /*yjx 20180409 16:03 添加结束*/
 		glEnd();
 	glEndList();
@@ -552,7 +570,7 @@ void DrawSun() {
 	{
 		glEnable(GL_LIGHTING);
 		GLfloat sun_light_position[] = { -X, -Y+5.0 , -Z + 20.0,1.0f };
-		GLfloat sun_light_ambient[] = { 1.0f,1.0f,1.0f,1.0f };
+		GLfloat sun_light_ambient[] = { 15.0f,15.0f,15.0f,15.0f };
 		GLfloat sun_light_diffuse[] = { 1.0f,1.0f,1.0f,1.0f };
 		GLfloat sun_light_specular[] = { 1.0f,1.0f,1.0f,1.0f };
 		glLightfv(GL_LIGHT0,GL_POSITION, sun_light_position);
