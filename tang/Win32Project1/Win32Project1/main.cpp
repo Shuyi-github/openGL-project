@@ -7,6 +7,7 @@
 #	pragma comment(lib, "SDL.lib")
 #	pragma comment(lib, "SDLmain.lib")
 #	pragma comment(lib, "SDL_image.lib")
+#define STB_IMAGE_IMPLEMENTATION
 #endif //_MSC_VER
 
 #include <string>
@@ -18,16 +19,24 @@
 
 #include <stdlib.h>
 #include <GL/glut.h>
+//add head file
+#include <vector>
+using std::vector;
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #define PI 3.141592653589793
 #define RAD (PI/180)
 
-unsigned Textures[3];
+//unsigned Textures[3];
+unsigned Textures[9];
 unsigned BoxList(0);					//Added!
 
 /* These will define the player's position and view angle. */
 double X(0.0), Y(0.0), Z(0.0);
 double ViewAngleHor(0.0), ViewAngleVer(0.0);
+
+
 
 /*
  * DegreeToRadian
@@ -140,6 +149,91 @@ void CompileLists()
 	glEndList();
 }
 
+enum { SKY_LEFT = 3, SKY_BACK=4, SKY_RIGHT=5, SKY_FRONT=6, SKY_TOP=7, SKY_BOTTOM=8 };
+void drawSkybox(float size)
+{
+	glRotated(ViewAngleVer, 1, 0, 0);
+	glRotated(ViewAngleHor, 0, 1, 0);
+	bool b1 = glIsEnabled(GL_TEXTURE_2D);     //new, we left the textures turned on, if it was turned on
+	glDisable(GL_LIGHTING); //turn off lighting, when making the skybox
+	glDisable(GL_DEPTH_TEST);       //turn off depth texting
+	glEnable(GL_TEXTURE_2D);        //and turn on texturing
+	glBindTexture(GL_TEXTURE_2D, Textures[SKY_FRONT]);  //use the texture we want
+	glBegin(GL_QUADS);      //and draw a face
+						//back face
+	glTexCoord2f(0, 0);      //use the correct texture coordinate
+	glVertex3f(size / 2, size / 2, size / 2);       //and a vertex
+	glTexCoord2f(1, 0);      //and repeat it...
+	glVertex3f(-size / 2, size / 2, size / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(-size / 2, -size / 2, size / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(size / 2, -size / 2, size / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, Textures[SKY_LEFT]);
+	glBegin(GL_QUADS);
+	//left face
+	glTexCoord2f(0, 0);
+	glVertex3f(-size / 2, size / 2, size / 2);
+	glTexCoord2f(1, 0);
+	glVertex3f(-size / 2, size / 2, -size / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(-size / 2, -size / 2, -size / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-size / 2, -size / 2, size / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, Textures[SKY_BACK]);
+	glBegin(GL_QUADS);
+	//front face
+	glTexCoord2f(1, 0);
+	glVertex3f(size / 2, size / 2, -size / 2);
+	glTexCoord2f(0, 0);
+	glVertex3f(-size / 2, size / 2, -size / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-size / 2, -size / 2, -size / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(size / 2, -size / 2, -size / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, Textures[SKY_RIGHT]);
+	glBegin(GL_QUADS);
+	//right face
+	glTexCoord2f(0, 0);
+	glVertex3f(size / 2, size / 2, -size / 2);
+	glTexCoord2f(1, 0);
+	glVertex3f(size / 2, size / 2, size / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(size / 2, -size / 2, size / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(size / 2, -size / 2, -size / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, Textures[SKY_TOP]);
+	glBegin(GL_QUADS);                      //top face
+	glTexCoord2f(1, 0);
+	glVertex3f(size / 2, size / 2, size / 2);
+	glTexCoord2f(0, 0);
+	glVertex3f(-size / 2, size / 2, size / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-size / 2, size / 2, -size / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(size / 2, size / 2, -size / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, Textures[SKY_BOTTOM]);
+	glBegin(GL_QUADS);
+	//bottom face
+	glTexCoord2f(1, 1);
+	glVertex3f(size / 2, -size / 2, size / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-size / 2, -size / 2, size / 2);
+	glTexCoord2f(0, 0);
+	glVertex3f(-size / 2, -size / 2, -size / 2);
+	glTexCoord2f(1, 0);
+	glVertex3f(size / 2, -size / 2, -size / 2);
+	glEnd();
+	glEnable(GL_LIGHTING);  //turn everything back, which we turned on, and turn everything off, which we have turned on.
+	glEnable(GL_DEPTH_TEST);
+	if (!b1)
+		glDisable(GL_TEXTURE_2D);
+}
 /*
  * DrawRoom
  *	This will render the entire scene (in other words, draw the room).
@@ -447,7 +541,9 @@ int main(int argc, char **argv)
 
 	/* Basic OpenGL initialization, handled in 'The Screen'. */
 	glShadeModel(GL_SMOOTH);
-	glClearColor(0, 0, 0, 1);
+	glClearColor(255, 255, 255, 1);
+
+	
 
 	glViewport(0, 0, 800, 600);
 
@@ -479,24 +575,37 @@ int main(int argc, char **argv)
 	Textures[1] = GrabTexObjFromFile("Data/Floor.png");
 	Textures[2] = GrabTexObjFromFile("Data/Box.png");			//Added!
 
+	Textures[SKY_LEFT] = GrabTexObjFromFile("Data/left.png");
+	Textures[SKY_BACK] = GrabTexObjFromFile("Data/back.png");
+	Textures[SKY_RIGHT] = GrabTexObjFromFile("Data/right.png");
+	Textures[SKY_FRONT] = GrabTexObjFromFile("Data/front.png");
+	Textures[SKY_TOP] = GrabTexObjFromFile("Data/top.png");
+	Textures[SKY_BOTTOM] = GrabTexObjFromFile("Data/bottom.png");
+
+
+	
 	//Replaced this with a loop that immediately checks the entire array.
 	//sizeof(Textures) is the size of the entire array in bytes (unsigned int = 4 bytes)
 	//so sizeof(Textures) would give 3 * 4 = 12 bytes, divide this by 4 bytes and you
 	//have 3.
-	for(unsigned i(0); i < sizeof(Textures) / sizeof(unsigned); ++i)
-	{
-		if(Textures[i] == 0)
-		{
-#ifdef _WIN32
-		MessageBoxA(0, "Something went seriously wrong!", "Fatal Error!", MB_OK | MB_ICONERROR);
-#endif //_WIN32
 
-		return 1;
-		}
-	}
+//	for(unsigned i(0); i < sizeof(Textures) / sizeof(unsigned); ++i)
+//	{
+//		if(Textures[i] == 0)
+//		{
+//#ifdef _WIN32
+//		MessageBoxA(0, "Something went seriously wrong!", "Fatal Error!", MB_OK | MB_ICONERROR);
+//#endif //_WIN32
+//
+//		return 1;
+//		}
+//	}
 
+	
+       //initskybox();
 	/* Compile the display lists. */
 	CompileLists();
+	
 
 	SDL_Event event;
 
@@ -576,8 +685,12 @@ int main(int argc, char **argv)
 			
 			}
 		}
-
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glPushMatrix();
+		drawSkybox(1);
+		glPopMatrix();
 
 		glPushMatrix();
 			DrawRoom();	
@@ -634,13 +747,13 @@ int main(int argc, char **argv)
 		/* Swap the display buffers. */
 		SDL_GL_SwapBuffers();
 	}
-
+	
 	/* Delete the created textures. */
-	glDeleteTextures(3, Textures);		//Changed to 3.
+	//glDeleteTextures(3, Textures);		//Changed to 3.
+	glDeleteTextures(9, Textures);
 	glDeleteLists(BoxList, 1);
 
 	/* Clean up. */
 	SDL_Quit();
-
 	return 0;
 }
