@@ -237,7 +237,7 @@ void drawSkybox(float size)
 {
 	glRotated(ViewAngleVer, 1, 0, 0);
 	glRotated(ViewAngleHor, 0, 1, 0);
-	glTranslated(-X, -Y, -Z);
+	//glTranslated(-X, -Y, -Z);
 
 	bool b1 = glIsEnabled(GL_TEXTURE_2D);     //new, we left the textures turned on, if it was turned on
 	glDisable(GL_LIGHTING); //turn off lighting, when making the skybox
@@ -371,10 +371,8 @@ void DrawRoom()
 	glOrtho(0, 800, 600, 0, -1, 1);
 
 	/* Draw walls. */
-	GLfloat ambientColor[] = { 0.1,0.1,0.1,1.0 };
-	GLfloat diffColor[] = { 1,1,1,1 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientColor);
-	glMaterialfv(GL_BACK, GL_DIFFUSE, diffColor);
+	float difamb[] = { 0.5,0.5,0.5,1.0 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, difamb);
 
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	glBegin(GL_QUADS);
@@ -501,22 +499,22 @@ void DrawRoom()
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3d(1000, 500, 0.0);
-	glTexCoord2f(2400.f / WallTexWidth, 0);
+	glTexCoord2f(1000.f / WallTexWidth, 0);
 	glVertex3d(-200, 500, 0.0);
-	glTexCoord2f(2400.f / WallTexWidth, 2400.f / WallTexHeight);
+	glTexCoord2f(1000.f / WallTexWidth, 1000.f / WallTexHeight);
 	glVertex3d(-200, 6000, 0.0);
-	glTexCoord2f(0, 2400.f / WallTexHeight);
+	glTexCoord2f(0, 1000.f / WallTexHeight);
 	glVertex3d(1000, 6000, 0.0);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3d(400, 500, -2.0);
-	glTexCoord2f(2400.f / WallTexWidth, 0);
+	glTexCoord2f(1000.f / WallTexWidth, 0);
 	glVertex3d(400, 500, 2.0);
-	glTexCoord2f(2400.f / WallTexWidth, 2400.f / WallTexHeight);
+	glTexCoord2f(1000.f / WallTexWidth, 1000.f / WallTexHeight);
 	glVertex3d(400, 6000, 2.0);
-	glTexCoord2f(0, 2400.f / WallTexHeight);
+	glTexCoord2f(0, 1000.f / WallTexHeight);
 	glVertex3d(400, 6000, -2.0);
 	glEnd();
 	
@@ -525,9 +523,10 @@ void DrawRoom()
 	/* Draw the floor and the ceiling, this is done separatly because glBindTexture isn't allowed inside glBegin. */
 	glBindTexture(GL_TEXTURE_2D, Textures[1]);
 	//GLfloat materialColor1[] = { 0.1,0.1,0.1,1.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientColor);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffColor);
+	
 	glBegin(GL_QUADS);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, difamb);
+	glNormal3f(0.0, 1.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(-200, 500, 4.0);
 
@@ -541,6 +540,7 @@ void DrawRoom()
 	glVertex3d(-200, 500, -4.0);
 
 	/* Ceiling. */
+	glNormal3f(0.0, 1.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(-200, 0, 4.0);
 
