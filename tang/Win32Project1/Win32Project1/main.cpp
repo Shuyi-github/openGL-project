@@ -29,7 +29,7 @@ using std::vector;
 #define RAD (PI/180)
 
 //unsigned Textures[3];
-unsigned Textures[9];
+unsigned Textures[10];
 unsigned BoxList(0);					//Added!
 
 										/* These will define the player's position and view angle. */
@@ -468,34 +468,58 @@ void DrawRoom()
 	
 	//door on wall while close
 	if (!open) {
-	glBindTexture(GL_TEXTURE_2D, Textures[1]);
+	glBindTexture(GL_TEXTURE_2D, Textures[9]);
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
 		glVertex3d(600, 0, -4.0);
-		glTexCoord2f(400.f / WallTexWidth, 0);
+		glTexCoord2f(1, 0);
 		glVertex3d(200, 0, -4.0);
-		glTexCoord2f(400.f / WallTexWidth, 400.f / WallTexHeight);
+		glTexCoord2f(1, 1);
 		glVertex3d(200, 500, -4.0);
-		glTexCoord2f(0, 400.f / WallTexHeight);
+		glTexCoord2f(0,1);
 		glVertex3d(600, 500, -4.0);
 		glEnd();
 	}
 	else {
 	//door on wall while open
-		glBindTexture(GL_TEXTURE_2D, Textures[1]);
+		glBindTexture(GL_TEXTURE_2D, Textures[9]);
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
 		glVertex3d(600, 0, -4.0);
-		glTexCoord2f(400.f / WallTexWidth, 0);
+		glTexCoord2f(1, 0);
 		glVertex3d(600, 0, -5.0);
-		glTexCoord2f(400.f / WallTexWidth, 400.f / WallTexHeight);
+		glTexCoord2f(1, 1);
 		glVertex3d(600, 500, -5.0);
-		glTexCoord2f(0, 400.f / WallTexHeight);
+		glTexCoord2f(0, 1);
 		glVertex3d(600, 500, -4.0);
 		glEnd();
 	}
 	
-
+	//
+	
+	glBindTexture(GL_TEXTURE_2D, Textures[0]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3d(1000, 500, 0.0);
+	glTexCoord2f(2400.f / WallTexWidth, 0);
+	glVertex3d(-200, 500, 0.0);
+	glTexCoord2f(2400.f / WallTexWidth, 2400.f / WallTexHeight);
+	glVertex3d(-200, 6000, 0.0);
+	glTexCoord2f(0, 2400.f / WallTexHeight);
+	glVertex3d(1000, 6000, 0.0);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, Textures[0]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3d(400, 500, -2.0);
+	glTexCoord2f(2400.f / WallTexWidth, 0);
+	glVertex3d(400, 500, 2.0);
+	glTexCoord2f(2400.f / WallTexWidth, 2400.f / WallTexHeight);
+	glVertex3d(400, 6000, 2.0);
+	glTexCoord2f(0, 2400.f / WallTexHeight);
+	glVertex3d(400, 6000, -2.0);
+	glEnd();
+	
 	
 
 	/* Draw the floor and the ceiling, this is done separatly because glBindTexture isn't allowed inside glBegin. */
@@ -608,7 +632,7 @@ void DrawSun() {
 	{
 		glEnable(GL_LIGHTING);
 		GLfloat sun_light_position[] = { -X, -Y + 5.0 , -Z + 20.0,1.0f };
-		GLfloat sun_light_ambient[] = { 15.0f,15.0f,15.0f,15.0f };
+		GLfloat sun_light_ambient[] = { 1.0f,1.0f,1.0f,1.0f };
 		GLfloat sun_light_diffuse[] = { 1.0f,1.0f,1.0f,1.0f };
 		GLfloat sun_light_specular[] = { 1.0f,1.0f,1.0f,1.0f };
 		glLightfv(GL_LIGHT0, GL_POSITION, sun_light_position);
@@ -630,7 +654,7 @@ void DrawLight1() {
 	glEnable(GL_LIGHTING);
 	//GLfloat room_light_position[] = { 0.0, 150.0 , -10.0,1.0f };
 	GLfloat room_light_position[] = { 0.0, 300.0 , -10.0 ,1.0f };
-	GLfloat room_light_ambient[] = { 15.0f,15.0f,15.0f,15.0f };
+	GLfloat room_light_ambient[] = { 1.0f,1.0f,1.0f,1.0f };
 	GLfloat room_light_diffuse[] = { 1.0f,1.0f,1.0f,1.0f };
 	GLfloat room_light_specular[] = { 1.0f,1.0f,1.0f,1.0f };
 	glLightfv(GL_LIGHT1, GL_POSITION, room_light_position);
@@ -712,6 +736,8 @@ int main(int argc, char **argv)
 	Textures[SKY_FRONT] = GrabTexObjFromFile("Data/front.png");
 	Textures[SKY_TOP] = GrabTexObjFromFile("Data/top.png");
 	Textures[SKY_BOTTOM] = GrabTexObjFromFile("Data/bottom.png");
+
+	Textures[9] = GrabTexObjFromFile("Data/door.png");
 
 
 
@@ -909,7 +935,7 @@ int main(int argc, char **argv)
 
 	/* Delete the created textures. */
 	//glDeleteTextures(3, Textures);		//Changed to 3.
-	glDeleteTextures(9, Textures);
+	glDeleteTextures(10, Textures);
 	glDeleteLists(BoxList, 1);
 
 	/* Clean up. */
