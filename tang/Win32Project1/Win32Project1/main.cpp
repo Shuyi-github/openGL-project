@@ -38,6 +38,9 @@ double ViewAngleHor(0.0), ViewAngleVer(0.0);
 
 bool open = false;
 
+
+float celgt[] = { 0.1,0.1,0.1,1.0 };
+float wallgt[] = { 0.2,0.2,0.2,1.0 };
 /*
 * DegreeToRadian
 *	Converts a specified amount of degrees to radians.
@@ -237,7 +240,7 @@ void drawSkybox(float size)
 {
 	glRotated(ViewAngleVer, 1, 0, 0);
 	glRotated(ViewAngleHor, 0, 1, 0);
-	//glTranslated(-X, -Y, -Z);
+	glTranslated(-X, -Y, -Z);
 
 	bool b1 = glIsEnabled(GL_TEXTURE_2D);     //new, we left the textures turned on, if it was turned on
 	glDisable(GL_LIGHTING); //turn off lighting, when making the skybox
@@ -371,8 +374,8 @@ void DrawRoom()
 	glOrtho(0, 800, 600, 0, -1, 1);
 
 	/* Draw walls. */
-	float difamb[] = { 0.5,0.5,0.5,1.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, difamb);
+	
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, wallgt);
 
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	glBegin(GL_QUADS);
@@ -496,7 +499,9 @@ void DrawRoom()
 	//
 	
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
+	
 	glBegin(GL_QUADS);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, wallgt);
 	glTexCoord2f(0, 0);
 	glVertex3d(1000, 500, 0.0);
 	glTexCoord2f(1000.f / WallTexWidth, 0);
@@ -508,6 +513,7 @@ void DrawRoom()
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	glBegin(GL_QUADS);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, wallgt);
 	glTexCoord2f(0, 0);
 	glVertex3d(400, 500, -2.0);
 	glTexCoord2f(1000.f / WallTexWidth, 0);
@@ -525,7 +531,7 @@ void DrawRoom()
 	//GLfloat materialColor1[] = { 0.1,0.1,0.1,1.0 };
 	
 	glBegin(GL_QUADS);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, difamb);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, celgt);
 	glNormal3f(0.0, 1.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(-200, 500, 4.0);
@@ -641,7 +647,13 @@ void DrawSun() {
 		glLightfv(GL_LIGHT0, GL_SPECULAR, sun_light_specular);
 		glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 100.0);
 		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, -90.0);
-		glEnable(GL_LIGHT0);
+		if (open) {
+			glEnable(GL_LIGHT0);
+		}
+		else {
+			glDisable(GL_LIGHT0);
+		}
+
 		glEnable(GL_DEPTH_TEST);
 
 	}
