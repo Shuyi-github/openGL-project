@@ -105,7 +105,7 @@ void CompileLists()
 	*/
 	GLfloat boxColor[] = { 0.1,0.1,0.1,1 };
 	GLfloat boxdiffColor[] = { 1,1,1,1 };
-	GLfloat boxspecColor[] = { 2,2,2,1 };
+	GLfloat boxspecColor[] = { 0.8,0.8,0.8,1 };
 	GLfloat shin[] = { 32.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, boxColor);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, boxdiffColor);
@@ -152,6 +152,7 @@ void CompileLists()
 	/*yjx 20180409 16:03*/
 	//后面
 	//glColor3f(1.0f, 0.0f, 0.0f);
+	glNormal3f(0.0, 0.0, 1.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(1500, 100, 0);//右上
 							 //glColor3f(1.0f, 0.0f, 0.0f);
@@ -163,8 +164,9 @@ void CompileLists()
 							 //glColor3f(1.0f, 0.0f, 0.0f);
 	glTexCoord2f(0, 1);
 	glVertex3d(1500, 475, 0);//右下
-							 //前面
+	//前面
 							 //glColor3f(0.0f, 1.0f, 0.0f);
+	glNormal3f(0.0, 0.0, -1.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(2000, 100, -0.8);//右上
 								//glColor3f(0.0f, 1.0f, 0.0f);
@@ -178,6 +180,7 @@ void CompileLists()
 	glVertex3d(2000, 475, -0.8);//右下
 								//左面
 								//glColor3f(0.0f, 0.0f, 1.0f);	
+	glNormal3f(-1.0, 0.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(1500, 100, -0.8);//右上
 								//glColor3f(0.0f, 0.0f, 1.0f);
@@ -192,6 +195,7 @@ void CompileLists()
 
 								//右面
 								//glColor3f(1.0f, 0.0f, 1.0f);
+	glNormal3f(1.0, 0.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(2000, 100, 0);//右上
 							 //glColor3f(1.0f, 0.0f, 1.0f);
@@ -205,6 +209,7 @@ void CompileLists()
 	glVertex3d(2000, 475, 0);//右下
 							 //下面
 							 //glColor3ub(128, 128, 128);
+	glNormal3f(0.0, 1.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(2000, 475, -0.8);//右上
 								//glColor3ub(128, 128, 128);
@@ -219,6 +224,7 @@ void CompileLists()
 
 							 //上面		
 							 //glColor3ub(151, 200, 151);
+	glNormal3f(0.0, -1.0, 0.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(2000, 100, -0.8);//右上
 								//glColor3ub(151, 200, 151);
