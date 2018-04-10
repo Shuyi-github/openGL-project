@@ -671,7 +671,7 @@ void DrawLight1() {
 	glTranslated(-X, -Y + 0.8, -Z - 1);
 	glEnable(GL_LIGHTING);
 	//GLfloat room_light_position[] = { 0.0, 150.0 , -10.0,1.0f };
-	GLfloat room_light_position[] = { 0.0, 300.0 , -10.0 ,1.0f };
+	GLfloat room_light_position[] = { 0.0, 300.0 , 0.0 ,1.0f };
 	GLfloat room_light_ambient[] = { 1.0f,1.0f,1.0f,1.0f };
 	GLfloat room_light_diffuse[] = { 1.0f,1.0f,1.0f,1.0f };
 	GLfloat room_light_specular[] = { 1.0f,1.0f,1.0f,1.0f };
@@ -686,7 +686,7 @@ void DrawLight1() {
 	//glMaterialf(GL_FRONT, GL_AMBIENT, sun_mat_shininess);
 	glMaterialf(GL_FRONT, GL_SHININESS, sun_mat_shininess);
 	//glMaterialfv(GL_FRONT, GL_EMISSION, sun_mat_emission);
-
+	glNormal3f(-1.0, -1.0, -1.0);
 	glEnable(GL_DEPTH_TEST);
 
 	glutSolidSphere(0.05, 20, 16);
