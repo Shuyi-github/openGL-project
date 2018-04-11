@@ -641,9 +641,9 @@ void DrawSun() {
 	glRotated(ViewAngleVer, 1, 0, 0);
 	glRotated(ViewAngleHor, 0, 1, 0);
 	glTranslated(-X, -Y + 5.0, -Z + 20.0);
-	GLfloat materialColor1[] = { 1,0,0,1.0 };
+	/*GLfloat materialColor1[] = { 1,0,0,1.0 };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, materialColor1);
-	glutSolidSphere(1, 20, 16);
+	glutSolidSphere(1, 20, 16);*/
 	{
 		glEnable(GL_LIGHTING);
 		GLfloat sun_light_position[] = { -X, -Y + 5.0 , -Z + 20.0,0.0f };
@@ -673,6 +673,7 @@ void DrawLight1() {
 	glRotated(ViewAngleHor, 0, 1, 0);
 	glTranslated(-X, -Y + 0.8, -Z - 1);
 	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
 	//GLfloat room_light_position[] = { 0.0, 150.0 , -10.0,1.0f };
 	GLfloat room_light_position[] = { 0.0, 300.0 , 0.0 ,1.0f };
 	GLfloat room_light_ambient[] = { 1.0f,1.0f,1.0f,1.0f };
@@ -685,13 +686,12 @@ void DrawLight1() {
 	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 100.0);
 	//glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, -90.0);
 	//GLfloat sun_mat_emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	GLfloat sun_mat_shininess = 30.0f;
+	GLfloat sun_mat_shininess = 120.0f;
 	//glMaterialf(GL_FRONT, GL_AMBIENT, sun_mat_shininess);
-	glMaterialf(GL_FRONT, GL_SHININESS, sun_mat_shininess);
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, lgt);
+	glMaterialf(GL_FRONT, GL_SHININESS, sun_mat_shininess);
+	
 	glNormal3f(0.0, 0.0, -1.0);
-	glEnable(GL_DEPTH_TEST);
-
 	glutSolidSphere(0.05, 20, 16);
 }
 
