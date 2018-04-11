@@ -38,9 +38,10 @@ double ViewAngleHor(0.0), ViewAngleVer(0.0);
 
 bool open = false;
 
-
+float lgt[] = { 0.8,0.8,0.8,1.0 };
 float celgt[] = { 0.1,0.1,0.1,1.0 };
 float wallgt[] = { 0.2,0.2,0.2,1.0 };
+float smlgt[] = { 0.1,0.1,0.1,1.0 };
 /*
 * DegreeToRadian
 *	Converts a specified amount of degrees to radians.
@@ -386,6 +387,7 @@ void DrawRoom()
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	glBegin(GL_QUADS);
 	/* Wall in front of you when the app starts. */
+	glNormal3f(0.0, 0.0, 1.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(-200, 0, 4.0);   //vertex point bottom left
 
@@ -427,6 +429,7 @@ void DrawRoom()
 	glVertex3d(1000, 500, 4.0);
 
 	/* Wall behind you (you won't be able to see this just yet, but you will later). */
+	glNormal3f(0.0, 0.0, -1.0);
 	glTexCoord2f(0, 0);
 	glVertex3d(1000, 0, -4.0);
 	glTexCoord2f(400.f / WallTexWidth, 0);
@@ -507,7 +510,7 @@ void DrawRoom()
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	
 	glBegin(GL_QUADS);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, wallgt);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, smlgt);
 	glTexCoord2f(0, 0);
 	glVertex3d(1000, 500, 0.0);
 	glTexCoord2f(1000.f / WallTexWidth, 0);
@@ -519,7 +522,7 @@ void DrawRoom()
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, Textures[0]);
 	glBegin(GL_QUADS);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, wallgt);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, smlgt);
 	glTexCoord2f(0, 0);
 	glVertex3d(400, 500, -2.0);
 	glTexCoord2f(1000.f / WallTexWidth, 0);
@@ -643,7 +646,7 @@ void DrawSun() {
 	glutSolidSphere(1, 20, 16);
 	{
 		glEnable(GL_LIGHTING);
-		GLfloat sun_light_position[] = { -X, -Y + 5.0 , -Z + 20.0,1.0f };
+		GLfloat sun_light_position[] = { -X, -Y + 5.0 , -Z + 20.0,0.0f };
 		GLfloat sun_light_ambient[] = { 1.0f,1.0f,1.0f,1.0f };
 		GLfloat sun_light_diffuse[] = { 1.0f,1.0f,1.0f,1.0f };
 		GLfloat sun_light_specular[] = { 1.0f,1.0f,1.0f,1.0f };
@@ -685,8 +688,8 @@ void DrawLight1() {
 	GLfloat sun_mat_shininess = 30.0f;
 	//glMaterialf(GL_FRONT, GL_AMBIENT, sun_mat_shininess);
 	glMaterialf(GL_FRONT, GL_SHININESS, sun_mat_shininess);
-	//glMaterialfv(GL_FRONT, GL_EMISSION, sun_mat_emission);
-	glNormal3f(-1.0, -1.0, -1.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, lgt);
+	glNormal3f(0.0, 0.0, -1.0);
 	glEnable(GL_DEPTH_TEST);
 
 	glutSolidSphere(0.05, 20, 16);
