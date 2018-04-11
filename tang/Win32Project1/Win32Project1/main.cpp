@@ -744,7 +744,6 @@ int main(int argc, char **argv)
 	/* Set up alpha blending. */
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	glColor4d(1, 1, 1, 1);
 
 	Textures[0] = GrabTexObjFromFile("Data/Wall.png");
@@ -851,7 +850,7 @@ int main(int argc, char **argv)
 					(light_status = !light_status) ? glEnable(GL_LIGHT1) : glDisable(GL_LIGHT1);
 
 				if (event.key.keysym.sym == SDLK_o)
-					(door_status = !door_status) ? open=true : open=false;
+					(door_status = !door_status) ? open = true : open = false;
 
 				if (event.key.keysym.sym == SDLK_UP)			Keys[0] = true;
 				if (event.key.keysym.sym == SDLK_DOWN)		Keys[1] = true;
@@ -900,18 +899,19 @@ int main(int argc, char **argv)
 		glPopMatrix();
 		glPopAttrib();
 
-
-		/* move if the keys are pressed, this is explained in the tutorial. */
-		if (Keys[0])
-		{
-			X -= cos(DegreeToRadian(ViewAngleHor + 90.0)) * 0.05;
-			Z -= sin(DegreeToRadian(ViewAngleHor + 90.0)) * 0.05;
-		}
+			/* move if the keys are pressed, this is explained in the tutorial. */
+			if (Keys[0])
+			{
+				X -= cos(DegreeToRadian(ViewAngleHor + 90.0)) * 0.05;
+				Z -= sin(DegreeToRadian(ViewAngleHor + 90.0)) * 0.05;
+			}
 
 		if (Keys[1])
 		{
 			X += cos(DegreeToRadian(ViewAngleHor + 90.0)) * 0.05;
 			Z += sin(DegreeToRadian(ViewAngleHor + 90.0)) * 0.05;
+
+
 		}
 
 		if (Keys[2])
@@ -925,7 +925,6 @@ int main(int argc, char **argv)
 			X -= cos(DegreeToRadian(ViewAngleHor + 180.0)) * 0.05;
 			Z -= sin(DegreeToRadian(ViewAngleHor + 180.0)) * 0.05;
 		}
-
 		if (Keys[4])
 		{
 			Y += 0.01;
